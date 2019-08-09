@@ -72,6 +72,11 @@ gem "fog-aws"
 gem "mini_magick"
 gem "carrierwave-aws"
 gem 'stripe', '~> 4.22'
+gem 'ranked-model'
+gem 'jquery-ui-rails'
+gem 'font-awesome-sass', '~> 5.9.0'
+
+
 
 
 source 'https://rails-assets.org' do
