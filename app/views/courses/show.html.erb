@@ -2,37 +2,58 @@
 
 <div class="booyah-box col-10 offset-1">
   <h1><%= @course.title %></h1>
-  <br />
-  <div class="row">
-    <div class="col-sm-4 col-12 text-center">
-      <span class="badge badge-default">
-      <%= number_to_currency @course.cost %>
-    </span>
+  <%= image_tag @course.image.url unless @course.image.url.nil? %>
+<br />
+<div class="row">
+  <div class="col-sm-4 col-12 text-center">
+    <span class="badge badge-default">
+    <%= number_to_currency @course.cost %>
+  </span>
 
-  <% if current_user && current_user == @course.user %>
-  <br />
-  <br />
-  <%= link_to 'Administer', instructor_course_path(@course), class: 'btn btn-danger btn-large' %>
-  <% end %>
-    </div>
+<% if current_user && current_user == @course.user %>
+<br />
+<br />
+<%= link_to 'Administer', instructor_course_path(@course), class: 'btn btn-danger btn-large' %>
+<% end %>
+<br />
+<br />
 
-    <div class="col-sm-8 col-12">
-      <%= @course.description %>
-    </div>
+<% if current_user && current_user.enrolled_in?(@course) %>
+  <h3 class="badge badge-info">You Are Enrolled!</h3>
+<% else %>
+  <%= link_to 'Enroll', course_enrollments_path(@course), class: 'btn btn-primary', method: :post %>
+<% end %>
+
+
   </div>
-  <div class="col-12">
+
+  <div class="col-sm-8 col-12">
+    <%= @course.description %>
+  </div>
+</div>
+
+<div class="col-12">
     <% @course.sections.each do |section| %>
       <div class="section">
+        <h3>
         <%= section.title %>
+      </h3>
+      <div class="row">
         <% section.lessons.each do |lesson| %>
+        <div class="col-12 col-sm-6">
+        <div class="lesson text-center">
           <div class="lesson">
             <%= link_to lesson_path(lesson) do %>
             <b><%= lesson.title %></b>
-            -
+            <br />
             <%= lesson.subtitle %>
             <% end %>
           </div>
+        </div>
+      </div>
         <% end %>
+      </div>
+      <br class="clr" />
       </div>
     <% end %>
   </div>
